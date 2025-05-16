@@ -1,18 +1,14 @@
-# Use the official Nginx image as the base
+# Use official Nginx base image
 FROM nginx:alpine
 
-# Set the working directory inside the container
-WORKDIR /usr/share/nginx/html
+# Remove the default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
 
-# Remove default nginx static content
-RUN rm -rf ./*
-
-# Copy your HTML, CSS, and JS files into the container
-COPY index.html .
-COPY styles.css .
-
+# Copy our HTML and CSS files into the nginx html directory
+COPY index.html /usr/share/nginx/html/
+COPY styles.css /usr/share/nginx/html/
 
 # Expose port 80
 EXPOSE 80
 
-# No CMD needed because nginx is already set up to run in foreground in this base image
+# Nginx runs automatically, no need to define CMD
